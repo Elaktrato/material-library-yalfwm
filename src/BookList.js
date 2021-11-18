@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { makeBookListData } from "../src/controllers/bookControllers"
+import { makeBookListData, filterBookList } from '../src/controllers/bookControllers.js';
 import { BookListView } from "./BookListView";
 import SearchAppBar from "./SearchAppBar";
 
@@ -24,6 +24,9 @@ useEffect(()=>{
 const actionFilter = (filter) => {
     //TODO do the actual filtering of bookData
     console.log(filter)
+    const filteredBooks = filterBookList(data, filter)
+    console.log(filteredBooks)
+    setBooksData(filteredBooks)
 }
 
   if (isLoading || !booksData) return "Loading...";
@@ -33,7 +36,7 @@ const actionFilter = (filter) => {
   return (
       <>
       <SearchAppBar actionFilter={actionFilter} />
-        <BookListView books={data} />
+        <BookListView books={booksData} />
       </>
   );
 }

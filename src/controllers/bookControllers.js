@@ -15,3 +15,14 @@ export function makeBookListData(rawBookData) {
         }
     })
 }
+
+export function filterBookList(bookData, filterCriteria) {
+    if (filterCriteria !== -1) {
+        return bookData.filter((book) => {
+            return (
+                book.title.toLowerCase().includes(filterCriteria.toLowerCase()) ||
+                book.author.toLowerCase().includes(filterCriteria.toLowerCase())
+            )
+        })
+    }
+}

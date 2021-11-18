@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { makeBookListData } from '../src/controllers/bookControllers.js';
+import { makeBookListData, filterBookList } from '../src/controllers/bookControllers.js';
 
 const books = [{
         "author": "George Orwell",
@@ -49,8 +49,23 @@ describe("Booklist", function() {
     describe("bookController", function() {
         it("first row should be dark", function() {
             let viewData = makeBookListData(books)
-            console.log(viewData)
             assert.equal('dark', viewData[0].backgroundClass)
+        })
+    })
+    describe("filterBookList", function() {
+        it("Test whether filter by title works", function() {
+            let viewData = makeBookListData(books)
+            let filteredData = filterBookList(viewData, 'Factfulness')
+            console.log(filteredData)
+            assert.equal(1, filteredData.length)
+        })
+    })
+    describe("filterBookList", function() {
+        it("Test whether filter by author works", function() {
+            let viewData = makeBookListData(books)
+            let filteredData = filterBookList(viewData, 'Nishio')
+            console.log(filteredData)
+            assert.equal(2, filteredData.length)
         })
     })
 })

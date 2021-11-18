@@ -54,11 +54,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar(props) {
 
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState(-1);
 
     useEffect(() => {
         props.actionFilter(filter)
+        if(filter !== -1){
+          localStorage.setItem('filter', filter)
+        }
     }, [filter])
+
+useEffect(() => {
+  props.actionFilter(localStorage.getItem('filter'));
+  setFilter(localStorage.getItem('filter'));
+  console.log('Filter set to: ' + localStorage.getItem('filter'))
+}, [])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -88,6 +97,7 @@ export default function SearchAppBar(props) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              value={filter}
               onChange={(event) => {setFilter(event.target.value)}}
             />
           </Search>
